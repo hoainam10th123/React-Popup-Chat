@@ -1,0 +1,40 @@
+.child-right {
+  margin-left: auto;
+  order: 2;
+}
+
+.message-send {
+  background-color: rgba(73, 73, 250, 0.972);
+  color: white;
+}
+
+.message-body {
+  background-color: rgba(230, 225, 225, 0.603);
+  border-radius: 10px;
+  padding: 5px;
+  max-width: 80%;
+}
+
+.parent-sent {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.chat-box {
+  position: fixed;
+  max-width: 320px;
+  z-index: 999;
+  right: 250px;
+  bottom: 1px;
+}
+
+.chat {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mr-5{
+  margin: 5px;
+}
