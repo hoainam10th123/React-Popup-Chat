@@ -4,9 +4,25 @@ import { IUser, User } from "../models/user";
 export default class UserOnlineStore {
     usersOnline: IUser[] = [];
     userChatBox: IUser[] = [];
+    miniChatBox: IUser[] = [];
 
     constructor() {
         makeAutoObservable(this);
+
+    }
+
+    addMiniChatBox= (user: IUser) => {
+        this.miniChatBox.push(user);
+        this.userChatBox = this.userChatBox.filter(x=>x.username !== user.username);
+    }
+
+    restoreMiniChatBox = (user: IUser)=>{
+        this.miniChatBox = this.miniChatBox.filter(x=>x.username !== user.username);
+        this.addUserChatBox(user);
+    }
+
+    removeMiniChatBox = (username: string) => {
+        this.miniChatBox = this.miniChatBox.filter(x=>x.username !== username);
     }
 
     addUser = (user: IUser) => {
@@ -26,7 +42,7 @@ export default class UserOnlineStore {
             case 0: {
                 runInAction(() =>{
                     this.userChatBox.push(new User(user.username, user.displayName, 250 + 325));
-                    localStorage.setItem('chatboxusers', JSON.stringify(this.userChatBox));
+                    localStorage.setItem('chatboxusers', JSON.stringify(this.userChatBox));                    
                 })                
                 break;
             }

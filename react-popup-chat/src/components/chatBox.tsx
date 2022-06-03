@@ -14,7 +14,7 @@ interface Props{
 }
 
 export default observer(function ChatBox({user}: Props) {
-    const {userOnlineStore:{removeUserChatBox}} = useStore();
+    const {userOnlineStore:{removeUserChatBox, addMiniChatBox}} = useStore();
 
     useEffect(() =>{
         var chatBox = document.getElementById(user.username);
@@ -27,7 +27,7 @@ export default observer(function ChatBox({user}: Props) {
                     <img height={50} src="/user.png" alt="" className="rounded-circle" />
                     <div className="text-primary">{user.displayName}</div>
                     <div className="child-right">
-                        <a className="mr-5"><FontAwesomeIcon icon={faMinus} /></a>
+                        <a className="mr-5" onClick={() => addMiniChatBox(user)}><FontAwesomeIcon icon={faMinus} /></a>
                         <a className="mr-5" onClick={() => removeUserChatBox(user.username)}><FontAwesomeIcon icon={faClose} /></a>
                     </div>
                 </Card.Header>
