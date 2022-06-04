@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, reaction, runInAction } from "mobx";
 import { IUser, User } from "../models/user";
 
 export default class UserOnlineStore {
@@ -8,7 +8,22 @@ export default class UserOnlineStore {
 
     constructor() {
         makeAutoObservable(this);
+        reaction(
+            () => this.userChatBox,
+            () => {
+                this.calculateRightPositionChatBox();
+            }
+        )
+    }
 
+    calculateRightPositionChatBox = () =>{
+        this.userChatBox.forEach((user, index) =>{
+            if(index % 2 === 0){
+                user.right = 250;
+            }else{
+                user.right = 250 + 325;
+            }
+        })
     }
 
     addMiniChatBox= (user: IUser) => {
@@ -18,7 +33,7 @@ export default class UserOnlineStore {
 
     restoreMiniChatBox = (user: IUser)=>{
         this.miniChatBox = this.miniChatBox.filter(x=>x.username !== user.username);
-        this.addUserChatBox(user);
+        this.addUserChatBox(user);        
     }
 
     removeMiniChatBox = (username: string) => {
@@ -57,6 +72,6 @@ export default class UserOnlineStore {
     }
 
     removeUserChatBox = (username: string) => {
-        this.userChatBox = this.userChatBox.filter(x => x.username !== username)
+        this.userChatBox = this.userChatBox.filter(x => x.username !== username);        
     }
 }
